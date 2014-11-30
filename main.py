@@ -25,6 +25,7 @@ class MeowGame(SimpleGame):
             self.man.move_right()
 
         if self.is_key_pressed(K_SPACE):
+            self.rock_man.setPos(self.man.posX)
             self.rock_man.update()
             self.man.is_round_true()
 
@@ -32,18 +33,32 @@ class MeowGame(SimpleGame):
             self.cat.move_left()
         elif self.is_key_pressed(K_d):
             self.cat.move_right()
-        
+
         if self.is_key_pressed(K_LSHIFT):
+            self.rock_cat.setPos(self.cat.posX)
             self.rock_cat.update()
             self.cat.is_round_true()
 
+        if not self.rock_man.pressed:
+            self.rock_man.move()
+            if self.rock_man.pressed:
+                self.rock_man.reset()
+
+        if not self.rock_cat.pressed:
+            self.rock_cat.move()
+            if self.rock_cat.pressed:
+                self.rock_cat.reset()
+
+    def on_key_up(self, key):
+        if key == K_SPACE:
+            self.rock_man.pressed = False
+        if key == K_LSHIFT:
+            self.rock_cat.pressed = False
 
     def render(self, surface):
-        if self.cat.round == True:
-            self.rock_cat.setPos(self.cat.posX)
+        if not self.rock_cat.pressed:
             self.rock_cat.render(surface)
-        if self.man.round == True:
-            self.rock_man.setPos(self.man.posX)
+        if not self.rock_man.pressed:
             self.rock_man.render(surface)
         self.man.render(surface)
         self.cat.render(surface)

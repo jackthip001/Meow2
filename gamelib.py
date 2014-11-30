@@ -24,30 +24,23 @@ class SimpleGame(object):
         self.font = pygame.font.SysFont("monospace",18)
         pygame.display.flip()
 
-    def on_key_left(self, key):
-        if(event.type == K_LEFT):
-            pass
+    def on_key_up(self, key):
+        pass
 
-    def on_key_right(self, key):
-        if(event.type == K_RIGHT):
-            pass
-    
-    def on_key_space(self, key):
-        if(event.type == K_SPACE):
-            pass
+    def on_key_down(self, key):
+        pass
 
     def over(self):
         self.is_over = True
 
     def __handle_events(self):
-        pass
         for event in pygame.event.get():
             if event.type == QUIT:
                 self.over()
-        #     elif event.type == KEYLEFT:
-        #         self.on_key_left(event.key)
-        #     elif event.type == KEYRIGHT:
-        #         self.on_key_right(event.key)
+            elif event.type == KEYUP:
+                self.on_key_up(event.key)
+            elif event.type == KEYDOWN:
+                self.on_key_down(event.key)
 
     def run(self):
         self.init()

@@ -7,9 +7,9 @@ rockImage = pygame.image.load("FlintStone.png")
 class ObjectRock(object):
 
     def __init__(self, player, speed = 3):
-        # (self.x, self.y) = pos
+        (self.x, self.y) = (-200, -200)
         self.speed = speed
-        self.space = False
+        self.pressed = False
         self.checkDistance = 0
         self.player = player
         self.force = 0
@@ -20,6 +20,7 @@ class ObjectRock(object):
         surface.blit(self.image, pos)
 
     def update(self):
+        print "rock update"
         self.force += 5
 
     def reset(self):
@@ -30,18 +31,20 @@ class ObjectRock(object):
         if self.player == "CAT":
             (self.x, self.y) = (posX + 50, 290)
         if self.player == "MAN":
-            (self.x, self.y) = (posX - 1, 290)
+            (self.x, self.y) = (posX, 290)
 
     def move(self):
-        if self.checkDistance < self.force:
+        print "rock move"
+        if self.checkDistance < self.force * 4:
             self.moveY()
             if self.player == "CAT":
                 self.moveX_cat()
             if self.player == "MAN":
                 self.moveX_man()
-            self.checkDistance += speed
-        else:
+        self.checkDistance += self.speed
+        if self.y >= 420:
             self.reset()
+            self.pressed = True
 
     def moveX_man(self):
         self.x -= self.speed
@@ -50,11 +53,11 @@ class ObjectRock(object):
         self.x += self.speed
 
     def moveY(self, theta = pi/4):
-        speedY = math.tan(theta) * self.speed
-        if self.x < force/2:
-            self.y += speedY
-        else:
-            self.y -= speedY
+        # speedY = math.tan(theta) * self.speed
+        if self.checkDistance < self.force/2:
+            self.y -= 3
+        elif self.y <= 420:
+            self.y += 3
 
         
 ######## Players ########
