@@ -52,12 +52,12 @@ class ObjectRock(object):
     def moveX_cat(self):
         self.x += self.speed
 
-    def moveY(self, theta = pi/4):
-        # speedY = math.tan(theta) * self.speed
+    def moveY(self, theta = pi/3):
+        speedY = tan(theta) * self.speed
         if self.checkDistance < self.force/2:
-            self.y -= 3
+            self.y -= speedY
         elif self.y <= 420:
-            self.y += 3
+            self.y += speedY
 
         
 ######## Players ########
