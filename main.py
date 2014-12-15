@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+import pygame.mixer
 
 from gamelib import SimpleGame
 from elements import ObjectRock, PlayerMan, PlayerMeow
@@ -17,6 +18,9 @@ class MeowGame(SimpleGame):
         self.rock_man = ObjectRock(player = "MAN")
         self.rock_cat = ObjectRock(player = "CAT")
         self.gamerun = True
+        pygame.mixer.init()
+        self.soundMan = pygame.mixer.Sound("LeeSinUlti.ogg.opus")
+        self.soundCat = pygame.mixer.Sound("GnarA.ogg.opus")
 
     def init(self):
         super(MeowGame, self).init()
@@ -68,6 +72,7 @@ class MeowGame(SimpleGame):
     def manHited(self):
         if self.man.posX + self.man.size >= self.rock_cat.x > self.man.posX:
             if self.rock_cat.y >= self.man.posY:
+                self.soundMan.play()
                 self.rock_cat.setPos(self.cat.posX)
                 self.rock_cat.reset()
                 self.rock_cat.pressed = True
@@ -77,6 +82,7 @@ class MeowGame(SimpleGame):
     def catHited(self):
         if self.cat.posX < self.rock_man.x <= self.cat.posX + self.cat.size:
             if self.rock_man.y >= self.cat.posY:
+                self.soundCat.play()
                 self.rock_man.setPos(self.man.posX)
                 self.rock_man.reset()
                 self.rock_man.pressed = True
