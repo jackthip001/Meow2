@@ -74,6 +74,7 @@ class PlayerMan(object):
         self.hp = 3
         self.image = pygame.transform.scale(manImage, (int(self.size), int(self.size)))
         self.round = False
+        self.canMove = True
    
     def is_round_false(self):
         self.round = False
@@ -82,11 +83,19 @@ class PlayerMan(object):
         self.round = True
 
     def move_left(self):
-        self.posX -= 5
+        self.chPosition()
+        if self.canMove:
+            self.posX -= 5
 
     def move_right(self):
         self.posX += 5
 
+    def chPosition(self):
+        if self.posX <= 340:
+            self.canMove = False
+        else:
+            self.canMove = True
+  
     def render(self, surface):
         pos = (self.posX, self.posY)
         surface.blit(self.image, pos)
@@ -99,6 +108,7 @@ class PlayerMeow(object):
         self.hp = 3
         self.image = pygame.transform.scale(meowImage, (int(self.size), int(self.size)))
         self.round = False
+        self.canMove = True
 
     def is_round_false(self):
         self.round = False
@@ -110,7 +120,15 @@ class PlayerMeow(object):
         self.posX -= 5
 
     def move_right(self):
-        self.posX += 5
+        self.chPosition()
+        if self.canMove:
+            self.posX += 5
+
+    def chPosition(self):
+        if self.posX >= 210:
+            self.canMove = False
+        else:
+            self.canMove = True
 
     def render(self, surface):
         pos = (self.posX, self.posY)
